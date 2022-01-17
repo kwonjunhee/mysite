@@ -11,26 +11,24 @@ import com.poscoict.mysite.vo.UserVo;
 import com.poscoict.web.mvc.Action;
 import com.poscoict.web.util.MvcUtil;
 
-public class JoinAction implements Action {
+public class LoginAction implements Action {
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-		String name = request.getParameter("name");
 		String email = request.getParameter("email");
 		String password = request.getParameter("password");
-		String gender = request.getParameter("gender");
 		
-		UserVo vo = new UserVo();
-		vo.setName(name);
-		vo.setEmail(email);
-		vo.setPassword(password);
-		vo.setGender(gender);
+		UserVo authUser = new UserDao().findByEmailAndPassword(email, password);
+		if(authUser == null) {
+			// 이메일 또는 비밀 번호가 틀림
+			request.setAttribute("result", "fail");
+			request.setAttribute("email", email);
+			MvcUtil.forward("user/loginform", request, response);
+			return;
+		}
+		// 인증 성공 => session 처리 해줘야 함
 		
-		new UserDao().insert(vo);
 		
-		MvcUtil.redirect(request.getContextPath()+"/user?a=joinsuccess", request, response);
-
 	}
 
 }
