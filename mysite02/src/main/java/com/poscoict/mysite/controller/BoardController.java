@@ -1,23 +1,26 @@
 package com.poscoict.mysite.controller;
 
 import java.io.IOException;
-
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.poscoict.mysite.mvc.user.UserActionFactory;
+import com.poscoict.mysite.mvc.board.BoardActionFactory;
+import com.poscoict.mysite.mvc.guestbook.GuestbookActionFactory;
 import com.poscoict.web.mvc.Action;
 import com.poscoict.web.mvc.ActionFactory;
 
-public class UserController extends HttpServlet {
+public class BoardController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String actionName = request.getParameter("a");
-		ActionFactory af = new UserActionFactory();
+		System.out.println("보드 컨트롤러임:"+actionName);
+		
+		ActionFactory af = new BoardActionFactory();
 		Action action = af.getAction(actionName);
 		action.execute(request, response);
+		
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
