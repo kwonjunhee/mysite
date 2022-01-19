@@ -10,9 +10,8 @@ import java.util.List;
 
 import com.poscoict.mysite.vo.BoardVo;
 
-
 public class BoardDao {
-	public List<BoardVo> findAll() {
+	public List<BoardVo> findAll(int page, String kwd) {
 		List<BoardVo> list = new ArrayList<>();
 		
 		Connection conn = null;
@@ -21,15 +20,22 @@ public class BoardDao {
 				
 		try {
 			conn = getConnection();
-			
-			String sql =
-				" select a.no, b.no, b.title, a.name, b.hit, date_format(reg_date, '%Y/%m/%d %H:%i:%s') as reg_date "
-				+ "from user a, board b where a.no = b.user_no "
-				+ "order by b.g_no desc, b.o_no asc";
-			pstmt = conn.prepareStatement(sql);
-			
-			rs = pstmt.executeQuery();
-			
+			if(kwd==null) {
+				String sql =
+						" select a.no, b.no, b.title, a.name, b.hit, date_format(reg_date, '%Y/%m/%d %H:%i:%s') as reg_date "
+						+ "from user a, board b where a.no = b.user_no "
+						+ "order by b.g_no desc, b.o_no asc limit " + page + " , 5 ";
+				pstmt = conn.prepareStatement(sql);
+				
+			} else {
+				String sql =
+						" select a.no, b.no, b.title, a.name, b.hit, date_format(reg_date, '%Y/%m/%d %H:%i:%s') as reg_date "
+						+ "from user a, board b where a.no = b.user_no and title like '%" + kwd + "%' "
+						+ "order by b.g_no desc, b.o_no asc "
+						+ " limit " + page + " , 5";				
+				pstmt = conn.prepareStatement(sql);
+			}
+			rs = pstmt.executeQuery();			
 			while(rs.next()) {
 				Long userNo = rs.getLong(1);
 				Long no = rs.getLong(2);
@@ -95,6 +101,7 @@ public class BoardDao {
 				int hit = rs.getInt(5);
 				String regDate = rs.getString(6);
 				
+				vo.setNo(no);
 				vo.setUserNo(userNo);
 				vo.setTitle(title);
 				vo.setContents(Contents);
@@ -228,6 +235,72 @@ public class BoardDao {
 		
 		return result;
 	}
+	
+	public boolean updateHit(Long no) {
+		boolean result = false;
+
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		try {
+			conn = getConnection();
+			
+			String sql = "update board set hit=ifnull(hit,0)+1 where no = "+no;
+			pstmt = conn.prepareStatement(sql);
+			
+			int count = pstmt.executeUpdate();
+			result = count == 1;
+			
+		} catch (SQLException e) {
+			System.out.println("error:" + e);
+		} finally {
+			try {
+				if(pstmt != null) {
+					pstmt.close();
+				}
+				if(conn != null) {
+					conn.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}		
+		
+		return result;
+	}
+	public int getCount() {
+		int result = 0;
+		ResultSet rs = null;
+
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		try {
+			conn = getConnection();
+			
+			String sql = "select count(*) from board";
+			pstmt = conn.prepareStatement(sql);
+			rs = pstmt.executeQuery();			
+			while(rs.next()) {
+				result = rs.getInt(1);
+			}
+			
+		} catch (SQLException e) {
+			System.out.println("error:" + e);
+		} finally {
+			try {
+				if(pstmt != null) {
+					pstmt.close();
+				}
+				if(conn != null) {
+					conn.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}		
+		
+		return result;
+	}
+	
 	
 	
 	private Connection getConnection() throws SQLException {

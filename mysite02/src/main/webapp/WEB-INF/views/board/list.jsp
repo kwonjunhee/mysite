@@ -14,8 +14,8 @@
 		<c:import url="/WEB-INF/views/includes/header.jsp"/>
 		<div id="content">
 			<div id="board">
-				<form id="search_form" action="" method="post">
-					<input type="text" id="kwd" name="kwd" value="">
+				<form id="search_form" action="${pageContext.request.contextPath}/board" method="post">
+					<input type="text" id="kwd" name="kwd" value="${param.kwd}">
 					<input type="submit" value="찾기">
 				</form>
 				<table class="tbl-ex">
@@ -30,14 +30,14 @@
 					<c:set var="count" value="${fn:length(list)}" />
 						<c:forEach items="${list}" var="vo" varStatus="status">
 						<tr>
-							<td>[${count-status.index}]</td>
+							<td>[${page.boardcnt-status.index}]</td>
 							<td style="text-align:left">
 							<c:choose>
 								<c:when test='${empty authUser}'>
 									<td>${vo.title}</td>
 								</c:when>
 								<c:otherwise>
-									<a href="${pageContext.servletContext.contextPath}/board?a=view&no=${vo.no}">${vo.title}</a></td>
+									<td><a href="${pageContext.servletContext.contextPath}/board?a=view&no=${vo.no}">${vo.title}</a></td>
 								</c:otherwise>
 							</c:choose>
 
@@ -45,7 +45,7 @@
 							<td>${vo.hit}</td>
 							<td>${vo.regDate}</td>
 						<c:if test='${vo.userNo eq authUser.no}'>
-							<td><a href="${pageContext.servletContext.contextPath}/board?a=delete&no=${vo.no}" class="del" 
+							<td><a href="${pageContext.servletContext.contextPath}/board?a=delete&no=${vo.no}&userNo=${vo.userNo}" class="del" 
 							style='background-image:url("${pageContext.servletContext.contextPath}/assets/images/recycle.png")'>삭제</a></td>
 						</c:if>
 						</tr>
@@ -55,16 +55,39 @@
 				<!-- pager 추가 -->
 				<div class="pager">
 					<ul>
-						<li><a href="">◀</a></li>
-						<li><a href="">1</a></li>
-						<li class="selected">2</li>
-						<li><a href="">3</a></li>
-						<li>4</li>
-						<li>5</li>
-						<li><a href="">▶</a></li>
+						
+						<c:choose>
+							<c:when test='${page.currentpage==1 }'>
+								<c:forEach var="pagenum" begin="1" end="${page.listcnt}">
+									<li><a href="${pageContext.servletContext.contextPath}/board?page=${pagenum}">${pagenum}</a></li>														
+								</c:forEach>
+								<li><a href="${pageContext.servletContext.contextPath}/board?page=${page.currentpage+page.nextpage}">▶</a></li>
+								
+							</c:when>
+							
+							<c:when test='${page.currentpage==page.listcnt}'>
+							<li><a href="${pageContext.servletContext.contextPath}/board?page=${page.currentpage+page.prepage}">◀</a></li>
+							
+								<c:forEach var="pagenum" begin="1" end="${page.listcnt}">
+									<li><a href="${pageContext.servletContext.contextPath}/board?page=${pagenum}">${pagenum}</a></li>														
+								</c:forEach>
+							</c:when>
+							
+							<c:otherwise>
+								<li><a href="${pageContext.servletContext.contextPath}/board?page=${page.currentpage+page.prepage}">◀</a></li>
+								<c:forEach var="pagenum" begin="1" end="${page.listcnt}">
+									<li><a href="${pageContext.servletContext.contextPath}/board?page=${pagenum}">${pagenum}</a></li>					
+								</c:forEach>
+								<li><a href="${pageContext.servletContext.contextPath}/board?page=${page.currentpage+page.nextpage}">▶</a></li>
+								
+							</c:otherwise>
+						</c:choose>
+						
 					</ul>
 				</div>					
 				<!-- pager 추가 -->
+				
+				
 				<c:if test='${!empty authUser}'>
 					<div class="bottom">
 						<a href="${pageContext.servletContext.contextPath}/board?a=writeform" id="new-book">글쓰기</a>

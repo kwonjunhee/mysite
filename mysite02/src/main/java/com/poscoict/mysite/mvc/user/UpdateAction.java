@@ -28,7 +28,9 @@ public class UpdateAction implements Action {
 		String password = request.getParameter("password");
 		String email = request.getParameter("email");
 		String gender = request.getParameter("gender");
-		
+		if(password.isEmpty()) {
+			password=request.getParameter("old_password");
+		}
 		UserVo vo = new UserVo();
 		
 		vo.setNo(no);
@@ -36,7 +38,6 @@ public class UpdateAction implements Action {
 		vo.setPassword(password);
 		vo.setEmail(email);
 		vo.setGender(gender);
-		
 		new UserDao().update(vo);
 
 		

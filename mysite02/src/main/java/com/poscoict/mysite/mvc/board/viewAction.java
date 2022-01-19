@@ -24,7 +24,11 @@ public class viewAction implements Action {
 		}
 		Long no = Long.parseLong(request.getParameter("no"));
 		session.setAttribute("authUser", authUser);
+		
 		request.setAttribute("vo", new BoardDao().findOne(no));
+		
+		new BoardDao().updateHit(no);
+		
 		MvcUtil.forward("board/view", request, response);
 
 	}

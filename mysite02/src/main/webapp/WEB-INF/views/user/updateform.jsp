@@ -17,12 +17,13 @@
 				<form id="update-form" name="updateForm" method="post" action="${pageContext.request.contextPath}/user">
 					<input type="hidden" name="a" value="update"/>
 					<input type="hidden" name="no" value="${userVo.no}">
+					<input type="hidden" name="old_password" value="${userVo.password}">
 					
 					<label class="block-label" for="name">이름</label>
 					<input id="name" name="name" type="text" value="${userVo.name}">
 					
 					<label class="block-label" for="password">비밀번호</label>
-					<input id="password" name="password" type="text" value="${userVo.password}">
+					<input id="password" name="password" type="text" value="">
 
 					<label class="block-label" for="email">이메일</label>
 					<input id="email" name="email" type="text" value="${userVo.email}" readonly>
