@@ -31,7 +31,6 @@
 						<c:forEach items="${list}" var="vo" varStatus="status">
 						<tr>
 							<td>[${page.boardcnt-status.index}]</td>
-							<td style="text-align:left">
 							<c:choose>
 								<c:when test='${empty authUser}'>
 									<td>${vo.title}</td>
