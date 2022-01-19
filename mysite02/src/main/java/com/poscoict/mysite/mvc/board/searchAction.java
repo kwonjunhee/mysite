@@ -13,17 +13,16 @@ import com.poscoict.mysite.vo.UserVo;
 import com.poscoict.web.mvc.Action;
 import com.poscoict.web.util.MvcUtil;
 
-public class ListAction implements Action {
+public class searchAction implements Action {
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
 		UserVo authUser = (UserVo)session.getAttribute("authUser");
 		String strpage = request.getParameter("page");
-		if(strpage==null||strpage.isEmpty()) strpage="1";
+		if(strpage==null) strpage="1";
 		int page = Integer.parseInt(strpage);
 		String kwd = request.getParameter("kwd");
-		
 		
 		HashMap<String, Integer> map = new HashMap<>();
 		map.put("pagecount", 5);
@@ -40,7 +39,8 @@ public class ListAction implements Action {
 		request.setAttribute("list", new BoardDao().findAll((map.get("currentpage")-1)*map.get("pagecount"), kwd));
 		request.setAttribute("page", map);
 		
-		MvcUtil.forward("board/list", request, response);
+		MvcUtil.redirect(request.getContextPath()+"/board?page="+page+"&kwd="+kwd, request, response);
+
 
 	}
 

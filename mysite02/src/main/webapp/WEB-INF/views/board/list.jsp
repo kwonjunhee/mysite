@@ -14,8 +14,9 @@
 		<c:import url="/WEB-INF/views/includes/header.jsp"/>
 		<div id="content">
 			<div id="board">
-				<form id="search_form" action="${pageContext.request.contextPath}/board" method="post">
+				<form id="search_form" action="${pageContext.request.contextPath}/board" method="get">
 					<input type="text" id="kwd" name="kwd" value="${param.kwd}">
+					<input type="hidden" id="page" name="page" value="">
 					<input type="submit" value="찾기">
 				</form>
 				<table class="tbl-ex">
@@ -58,26 +59,26 @@
 						<c:choose>
 							<c:when test='${page.currentpage==1 }'>
 								<c:forEach var="pagenum" begin="1" end="${page.listcnt}">
-									<li><a href="${pageContext.servletContext.contextPath}/board?page=${pagenum}">${pagenum}</a></li>														
+									<li><a href="${pageContext.servletContext.contextPath}/board?page=${pagenum}&kwd=${param.kwd}">${pagenum}</a></li>														
 								</c:forEach>
-								<li><a href="${pageContext.servletContext.contextPath}/board?page=${page.currentpage+page.nextpage}">▶</a></li>
+								<li><a href="${pageContext.servletContext.contextPath}/board?page=${page.currentpage+page.nextpage}&kwd=${param.kwd}">▶</a></li>
 								
 							</c:when>
 							
 							<c:when test='${page.currentpage==page.listcnt}'>
-							<li><a href="${pageContext.servletContext.contextPath}/board?page=${page.currentpage+page.prepage}">◀</a></li>
+							<li><a href="${pageContext.servletContext.contextPath}/board?page=${page.currentpage+page.prepage}&kwd=${param.kwd}">◀</a></li>
 							
 								<c:forEach var="pagenum" begin="1" end="${page.listcnt}">
-									<li><a href="${pageContext.servletContext.contextPath}/board?page=${pagenum}">${pagenum}</a></li>														
+									<li><a href="${pageContext.servletContext.contextPath}/board?page=${pagenum}&kwd=${param.kwd}">${pagenum}</a></li>														
 								</c:forEach>
 							</c:when>
 							
 							<c:otherwise>
-								<li><a href="${pageContext.servletContext.contextPath}/board?page=${page.currentpage+page.prepage}">◀</a></li>
+								<li><a href="${pageContext.servletContext.contextPath}/board?page=${page.currentpage+page.prepage}&kwd=${param.kwd}">◀</a></li>
 								<c:forEach var="pagenum" begin="1" end="${page.listcnt}">
-									<li><a href="${pageContext.servletContext.contextPath}/board?page=${pagenum}">${pagenum}</a></li>					
+									<li><a href="${pageContext.servletContext.contextPath}/board?page=${pagenum}&kwd=${param.kwd}">${pagenum}</a></li>					
 								</c:forEach>
-								<li><a href="${pageContext.servletContext.contextPath}/board?page=${page.currentpage+page.nextpage}">▶</a></li>
+								<li><a href="${pageContext.servletContext.contextPath}/board?page=${page.currentpage+page.nextpage}&kwd=${param.kwd}">▶</a></li>
 								
 							</c:otherwise>
 						</c:choose>

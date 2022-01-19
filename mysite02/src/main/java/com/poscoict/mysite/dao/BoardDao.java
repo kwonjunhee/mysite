@@ -278,7 +278,7 @@ public class BoardDao {
 			
 			String sql = "select count(*) from board";
 			pstmt = conn.prepareStatement(sql);
-			rs = pstmt.executeQuery();			
+			rs = pstmt.executeQuery();	
 			while(rs.next()) {
 				result = rs.getInt(1);
 			}
