@@ -7,11 +7,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.poscoict.mysite.vo.BoardVo;
 import com.poscoict.mysite.vo.UserVo;
 import com.poscoict.web.mvc.Action;
 import com.poscoict.web.util.MvcUtil;
 
-public class writeFormAction implements Action {
+public class replyFormAction implements Action {
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -21,9 +22,18 @@ public class writeFormAction implements Action {
 			MvcUtil.redirect(request.getContextPath() + "/user?a=loginform", request, response);
 			return;
 		}
-
+		int groupNo = Integer.parseInt(request.getParameter("g"));
+		int orderNo = Integer.parseInt(request.getParameter("o"));
+		int depth = Integer.parseInt(request.getParameter("d"));
 		
-		MvcUtil.forward("board/writeform", request, response);
+		BoardVo vo = new BoardVo();
+		vo.setGroupNo(groupNo);
+		vo.setOrderNo(orderNo);
+		vo.setDepth(depth);
+		
+		request.setAttribute("vo", vo);
+		
+		MvcUtil.forward("board/replyform", request, response);
 
 	}
 

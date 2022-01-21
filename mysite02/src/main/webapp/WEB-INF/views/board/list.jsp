@@ -32,12 +32,19 @@
 						<c:forEach items="${list}" var="vo" varStatus="status">
 						<tr>
 							<td>[${page.boardcnt-status.index}]</td>
+							
+							<td style="text-align:left, padding-left:${(vo.depth-1)}*20px">
+										<c:if test = "${vo.depth>1}">
+											<img src="${pageContext.servletContext.contextPath}/assets/images/reply.png"/>
+										</c:if>
 							<c:choose>
 								<c:when test='${empty authUser}'>
-									<td>${vo.title}</td>
+									
+									${vo.title}
 								</c:when>
 								<c:otherwise>
-									<td><a href="${pageContext.servletContext.contextPath}/board?a=view&no=${vo.no}">${vo.title}</a></td>
+									
+									<a href="${pageContext.servletContext.contextPath}/board?a=view&no=${vo.no}">${vo.title}</a>
 								</c:otherwise>
 							</c:choose>
 

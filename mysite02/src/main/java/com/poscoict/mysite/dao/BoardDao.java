@@ -22,14 +22,14 @@ public class BoardDao {
 			conn = getConnection();
 			if(kwd==null) {
 				String sql =
-						" select a.no, b.no, b.title, a.name, b.hit, date_format(reg_date, '%Y/%m/%d %H:%i:%s') as reg_date "
+						" select a.no, b.no, b.title, a.name, b.hit, date_format(reg_date, '%Y/%m/%d %H:%i:%s') as reg_date, depth "
 						+ "from user a, board b where a.no = b.user_no "
 						+ "order by b.g_no desc, b.o_no asc limit " + page + " , 5 ";
 				pstmt = conn.prepareStatement(sql);
 				
 			} else {
 				String sql =
-						" select a.no, b.no, b.title, a.name, b.hit, date_format(reg_date, '%Y/%m/%d %H:%i:%s') as reg_date "
+						" select a.no, b.no, b.title, a.name, b.hit, date_format(reg_date, '%Y/%m/%d %H:%i:%s') as reg_date, depth "
 						+ "from user a, board b where a.no = b.user_no and title like '%" + kwd + "%' "
 						+ "order by b.g_no desc, b.o_no asc "
 						+ " limit " + page + " , 5";				
@@ -43,6 +43,7 @@ public class BoardDao {
 				String UserName = rs.getString(4);
 				int hit = rs.getInt(5);
 				String regDate = rs.getString(6);
+				int depth = rs.getInt(7);
 				
 				BoardVo vo = new BoardVo();
 				vo.setUserNo(userNo);
@@ -51,6 +52,7 @@ public class BoardDao {
 				vo.setUserName(UserName);
 				vo.setHit(hit);
 				vo.setRegDate(regDate);
+				vo.setDepth(depth);
 				
 				list.add(vo);
 			}
@@ -86,7 +88,8 @@ public class BoardDao {
 			conn = getConnection();
 			
 			String sql =
-				" select a.no, b.title, b.contents, a.name, b.hit, date_format(reg_date, '%Y/%m/%d %H:%i:%s') as reg_date "
+				" select a.no, b.title, b.contents, a.name, b.hit, date_format(reg_date, '%Y/%m/%d %H:%i:%s') as reg_date, "
+				+ " g_no, o_no, depth "
 				+ " from user a, board b where a.no = b.user_no and b.no= " + no 
 				+ " order by b.g_no desc, b.o_no asc";
 			pstmt = conn.prepareStatement(sql);
@@ -100,6 +103,9 @@ public class BoardDao {
 				String UserName = rs.getString(4);
 				int hit = rs.getInt(5);
 				String regDate = rs.getString(6);
+				int groupNo = rs.getInt(7);
+				int orderNo = rs.getInt(8);
+				int depth = rs.getInt(9);
 				
 				vo.setNo(no);
 				vo.setUserNo(userNo);
@@ -108,6 +114,9 @@ public class BoardDao {
 				vo.setUserName(UserName);
 				vo.setHit(hit);
 				vo.setRegDate(regDate);
+				vo.setGroupNo(groupNo);
+				vo.setOrderNo(orderNo);
+				vo.setDepth(depth);
 			}
 			
 		} catch (SQLException e) {
@@ -200,6 +209,55 @@ public class BoardDao {
 		
 		return result;
 	}
+	
+	public void reply(BoardVo vo) {
+		Connection conn = null;
+		PreparedStatement pstmt1 = null;
+		PreparedStatement pstmt2 = null;
+
+		try {
+			conn = getConnection();
+			
+			String sql1 = "update board set o_no = o_no+1 where o_no > ? and  g_no=?";
+			pstmt1 = conn.prepareStatement(sql1);
+			
+			pstmt1.setInt(1, vo.getOrderNo());
+			pstmt1.setInt(2, vo.getGroupNo());
+			pstmt1.executeUpdate();
+			
+			String sql2 = "insert into board values(null, ? , ?, 0, ?, ?+1, ?+1, now(), ?, ?)";
+			pstmt2 = conn.prepareStatement(sql2);
+			
+			
+			pstmt2.setString(1, vo.getTitle());
+			pstmt2.setString(2, vo.getContents());
+			pstmt2.setInt(3, vo.getGroupNo());
+			pstmt2.setInt(4, vo.getOrderNo());
+			pstmt2.setInt(5, vo.getDepth());
+			pstmt2.setLong(6, vo.getUserNo());
+			pstmt2.setString(7, vo.getUserName());
+			pstmt2.executeUpdate();
+
+		} catch (SQLException e) {
+			System.out.println("error:" + e);
+		} finally {
+			try {
+				if(pstmt1 != null) {
+					pstmt1.close();
+				}
+				if(pstmt2 != null) {
+					pstmt2.close();
+				}
+				if(conn != null) {
+					conn.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}		
+		
+	}
+
 	public boolean modify(BoardVo vo) {
 		boolean result = false;
 
@@ -315,5 +373,6 @@ public class BoardDao {
 		
 		return conn;
 	}
+
 
 }
