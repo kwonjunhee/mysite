@@ -11,7 +11,7 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/x
 		<project.build.sourceEncoding>utf-8</project.build.sourceEncoding>
 		<project.reporting.outputEncodnig>utf-8</project.reporting.outputEncodnig>
 	</properties>
-	
+	<!-- JSTL -->
 	<dependencies>
 	<dependency>
 	    <groupId>jstl</groupId>
@@ -75,5 +75,6 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/x
   
   <modules>
   	<module>mysite02</module>
+  	<module>mysite03</module>
   </modules>
 </project>
