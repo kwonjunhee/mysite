@@ -33,13 +33,12 @@
 						<tr>
 							<td>[${page.boardcnt-status.index}]</td>
 							
-							<td style="text-align:left, padding-left:${(vo.depth-1)}*20px">
-										<c:if test = "${vo.depth>1}">
-											<img src="${pageContext.servletContext.contextPath}/assets/images/reply.png"/>
-										</c:if>
+							<td style="text-align:left, padding-left:${(vo.depth-1)*40}px">
+								<c:if test = "${vo.depth>1}">
+									<img src="${pageContext.servletContext.contextPath}/assets/images/reply.png"/>
+								</c:if>
 							<c:choose>
 								<c:when test='${empty authUser}'>
-									
 									${vo.title}
 								</c:when>
 								<c:otherwise>
