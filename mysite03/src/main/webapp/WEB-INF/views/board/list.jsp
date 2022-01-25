@@ -29,6 +29,7 @@
 						<th>&nbsp;</th>
 					</tr>				
 					<c:set var="count" value="${fn:length(list)}" />
+					
 						<c:forEach items="${list}" var="vo" varStatus="status">
 						<tr>
 							<td>[${page.boardcnt-status.index}]</td>
@@ -44,7 +45,7 @@
 								</c:when>
 								<c:otherwise>
 									
-									<a href="${pageContext.servletContext.contextPath}/board?a=view&no=${vo.no}">${vo.title}</a>
+									<a href="${pageContext.servletContext.contextPath}/board/view/${vo.no}?page=${param.page}&kwd=${param.kwd}">${vo.title}</a>
 								</c:otherwise>
 							</c:choose>
 
@@ -52,7 +53,7 @@
 							<td>${vo.hit}</td>
 							<td>${vo.regDate}</td>
 						<c:if test='${vo.userNo eq authUser.no}'>
-							<td><a href="${pageContext.servletContext.contextPath}/board?a=delete&no=${vo.no}&userNo=${vo.userNo}" class="del" 
+							<td><a href="${pageContext.servletContext.contextPath}/board/delete/${vo.no}" class="del" 
 							style='background-image:url("${pageContext.servletContext.contextPath}/assets/images/recycle.png")'>삭제</a></td>
 						</c:if>
 						</tr>
@@ -97,7 +98,7 @@
 				
 				<c:if test='${!empty authUser}'>
 					<div class="bottom">
-						<a href="${pageContext.servletContext.contextPath}/board?a=writeform" id="new-book">글쓰기</a>
+						<a href="${pageContext.servletContext.contextPath}/board/write" id="new-book">글쓰기</a>
 					</div>
 				</c:if>
 								

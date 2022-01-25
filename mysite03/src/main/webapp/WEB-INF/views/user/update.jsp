@@ -14,8 +14,7 @@
 		<c:import url="/WEB-INF/views/includes/header.jsp"/>
 		<div id="content">
 			<div id="user">
-				<form id="update-form" name="updateForm" method="post" action="${pageContext.request.contextPath}/user">
-					<input type="hidden" name="a" value="update"/>
+				<form id="update-form" name="update" method="post" action="${pageContext.request.contextPath}/user/update">
 					<input type="hidden" name="no" value="${userVo.no}">
 					<input type="hidden" name="old_password" value="${userVo.password}">
 					
@@ -29,10 +28,16 @@
 					<input id="email" name="email" type="text" value="${userVo.email}" readonly>
 					<fieldset>
 						<legend>성별</legend>
-						<c:if test="${vo.gender eq female}">
-							<label>여</label> <input type="radio" name="gender" value="female" checked="checked">
-							<label>남</label> <input type="radio" name="gender" value="male">
-						</c:if>
+						<c:choose>
+							<c:when test="${userVo.gender == 'female'}">
+								<label>여</label> <input type="radio" name="gender" value="female" checked="checked">
+								<label>남</label> <input type="radio" name="gender" value="male">
+							</c:when>
+							<c:otherwise>
+								<label>여</label> <input type="radio" name="gender" value="female">
+								<label>남</label> <input type="radio" name="gender" value="male" checked="checked">
+							</c:otherwise>
+							</c:choose>
 					</fieldset>
 					<input type="submit" value="수정하기">
 				</form>

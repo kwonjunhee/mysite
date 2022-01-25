@@ -7,19 +7,21 @@
 <head>
 <title>mysite</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8">
-<link href="${pageContext.request.contextPath}/assets/css/user.css" rel="stylesheet" type="text/css">
+<link href="${pageContext.request.contextPath}/assets/css/guestbook.css" rel="stylesheet" type="text/css">
 </head>
 <body>
 	<div id="container">
 		<c:import url="/WEB-INF/views/includes/header.jsp"/>
 
 		<div id="content">
-			<div id="user">
-				<p class="jr-success">
-					회원가입을 축하합니다.
-					<br><br>
-					<a href="${pageContext.request.contextPath}/user/login">로그인하기</a>
-				</p>				
+			<div id="guestbook" class="delete-form">
+				<form method="post" action="${pageContext.request.contextPath}/guestbook/delete">
+					<input type='hidden' name="no" value="${param.no}">
+					<label>비밀번호</label>
+					<input type="password" name="password">
+					<input type="submit" value="확인">
+				</form>
+				<a href="${pageContext.request.contextPath}">방명록 리스트</a>
 			</div>
 		</div>
 		<c:import url="/WEB-INF/views/includes/navigation.jsp"/>
