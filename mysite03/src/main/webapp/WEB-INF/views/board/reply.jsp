@@ -14,11 +14,11 @@
 		<div id="content">
 			<div id="board">
 				<form class="board-form" method="post" action="${pageContext.request.contextPath}/board/write">
-					<input type ="hidden" name="userNo" value="${vo.userNo}">
-					<input type ="hidden" name="userName" value="${vo.userName}">
-					<input type ="hidden" name="groupNo" value="${vo.groupNo}">
-					<input type ="hidden" name="orderNo" value="${vo.orderNo}">
-					<input type ="hidden" name="depth" value="${vo.depth}">
+					<input type ="hidden" name="userNo" value="${boardvo.userNo}">
+					<input type ="hidden" name="userName" value="${boardvo.userName}">
+					<input type ="hidden" name="groupNo" value="${boardvo.groupNo}">
+					<input type ="hidden" name="orderNo" value="${boardvo.orderNo}">
+					<input type ="hidden" name="depth" value="${boardvo.depth}">
 					
 					<table class="tbl-ex">
 						<tr>

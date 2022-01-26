@@ -20,7 +20,7 @@ public class BoardService {
 		if(boardvo.getGroupNo() != null) {
 			increaseGroupOrderNo(boardvo);
 		}
-		System.out.println(boardvo);
+		System.out.println("boardservice: " + boardvo);
 		return 1==boardRepository.insert(boardvo);
 		
 	}
@@ -28,15 +28,15 @@ public class BoardService {
 	//view 글 보기
 	public BoardVo getContents(Long no) {
 		boardRepository.updateHit(no);
-		System.out.println(boardRepository.findOne(no));
+		System.out.println("boardservice view: "+boardRepository.findOne(no));
 		return boardRepository.findOne(no);
 	}
 	
 	// 글 수정하기 전 -> 본인 글 볼 때
 	// 난 아직도 얘의 효용성을 모르겠다
-	public BoardVo getContents(Long no, Long userNo) {
-		return boardRepository.findOne(no);
-	}
+//	public BoardVo getContents(Long no, Long userNo) {
+//		return boardRepository.findOne(no);
+//	}
 	
 	// 글 수정
 	public boolean updateContents(BoardVo boardvo) {
@@ -44,8 +44,8 @@ public class BoardService {
 	}
 	
 	// 글 삭제
-	public boolean deleteContents(Long no, Long userNo) {
-		return boardRepository.delete(no, userNo);
+	public boolean deleteContents(BoardVo boardvo) {
+		return boardRepository.delete(boardvo);
 		
 	}
 	

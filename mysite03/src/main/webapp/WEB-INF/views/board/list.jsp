@@ -30,30 +30,31 @@
 					</tr>				
 					<c:set var="count" value="${fn:length(list)}" />
 					
-						<c:forEach items="${list}" var="vo" varStatus="status">
+						<c:forEach items="${list}" var="boardvo" varStatus="status">
 						<tr>
 							<td>[${page.boardcnt-status.index}]</td>
 							
 							<td style="text-align:left, padding-left:${(vo.depth-1)}*20px">
-										<c:if test = "${vo.depth>1}">
+										<c:if test = "${boardvo.depth>1}">
 											<img src="${pageContext.servletContext.contextPath}/assets/images/reply.png"/>
 										</c:if>
 							<c:choose>
 								<c:when test='${empty authUser}'>
 									
-									${vo.title}
+									${boardvo.title}
 								</c:when>
 								<c:otherwise>
 									
-									<a href="${pageContext.servletContext.contextPath}/board/view/${vo.no}?page=${param.page}&kwd=${param.kwd}">${vo.title}</a>
+									<a href="${pageContext.servletContext.contextPath}/board/view/${boardvo.no}?page=${param.page}&kwd=${param.kwd}">${boardvo.title}</a>
 								</c:otherwise>
 							</c:choose>
 
-							<td>${vo.userName}</td>
-							<td>${vo.hit}</td>
-							<td>${vo.regDate}</td>
-						<c:if test='${vo.userNo eq authUser.no}'>
-							<td><a href="${pageContext.servletContext.contextPath}/board/delete/${vo.no}" class="del" 
+							<td>${boardvo.userName}</td>
+							<td>${boardvo.hit}</td>
+							<td>${boardvo.regDate}</td>
+						<c:if test='${boardvo.userNo eq authUser.no}'>
+						
+							<td><a href="${pageContext.servletContext.contextPath}/board/delete/${boardvo.no}" class="del" 
 							style='background-image:url("${pageContext.servletContext.contextPath}/assets/images/recycle.png")'>삭제</a></td>
 						</c:if>
 						</tr>
