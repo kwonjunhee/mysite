@@ -21,21 +21,21 @@
 					</tr>
 					<tr>
 						<td class="label">제목</td>
-						<td>${vo.title}</td>
+						<td>${boardvo.title}</td>
 					</tr>
 					<tr>
 						<td class="label">내용</td>
-						<td>${fn:replace(vo.contents, newline, "<br/>")}</td>
+						<td>${fn:replace(boardvo.contents, newline, "<br/>")}</td>
 					</tr>
 				</table>
 				<div class="bottom">
 					<a href="${pageContext.request.contextPath}/board?page=${param.page}&kwd=${param.kwd}">글목록</a>
-					<c:if test='${vo.userNo eq authUser.no}'>
-						<a href="${pageContext.request.contextPath}/board/modify/${vo.no}">글수정</a>					
+					<c:if test='${boardvo.userNo eq authUser.no}'>
+						<a href="${pageContext.request.contextPath}/board/modify/${boardvo.no}">글수정</a>					
 					</c:if>
 				<c:if test='${!empty authUser}'>
 					<div class="bottom">
-						<a href="${pageContext.servletContext.contextPath}/board/reply?g=${vo.groupNo}&o=${vo.orderNo}&d=${vo.depth}" id="new-book">답글</a>
+						<a href="${pageContext.servletContext.contextPath}/board/reply/${boardvo.no}?g=${boardvo.groupNo}&o=${boardvo.orderNo}&d=${boardvo.depth}" id="new-book">답글</a>
 					</div>
 				</c:if>
 				</div>

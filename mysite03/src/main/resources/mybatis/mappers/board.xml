@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="board">
+	
+	<select id="findOne" parameterType="long" resultType="boardvo" >
+		<![CDATA[ select a.no, b.title, b.contents, a.name, b.hit, date_format(reg_date, '%Y/%m/%d %H:%i:%s') 
+				as regDate, g_no, o_no, depth from user a, board b 
+				where a.no = b.user_no and b.no=#{no} order by b.g_no desc, b.o_no asc]]>
+	</select>
+	
+	
+	<delete id="delete" parameterType="map">
+		<![CDATA[delete from board where no=#{no} and user_no=#{userno}]]>
+	</delete>
+	
+	
+	<update id="modify" parameterType="boardvo">
+		<![CDATA[update board set title=#{title}, contents=#{contents} where no=#{no}]]>
+	</update>
+	
+	<update id="updateHit" parameterType="long">
+		<![CDATA[update board set hit=ifnull(hit,0)+1 where no = #{no}]]>
+	</update>
+	
+	<select id="getCount" parameterType="string" resultType="integer">
+		<choose>
+			<when test="_parameter == null or ''== _parameter">
+				<![CDATA[ select count(*) from board ]]>
+			</when>
+			<otherwise>
+				<![CDATA[ select count(*) from board where title 
+				like '%${_parameter}%' or contents like '%${_parameter}%' ]]>
+			</otherwise>
+		</choose>
+	</select>
+</mapper>

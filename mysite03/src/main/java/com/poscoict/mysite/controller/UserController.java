@@ -26,9 +26,9 @@ public class UserController {
 	}
 	
 	@RequestMapping(value="/join", method=RequestMethod.POST)
-	public String join(UserVo userVo) {
-		userService.join(userVo);
-		System.out.println(userVo);
+	public String join(UserVo uservo) {
+		userService.join(uservo);
+		System.out.println(uservo);
 		return "redirect:/user/joinsuccess";
 	}
 
@@ -74,22 +74,22 @@ public class UserController {
 			return "redirect:/";
 		}
 		Long userNo = authUser.getNo();
-		UserVo userVo = userService.getUser(userNo);
-		model.addAttribute("userVo", userVo);
+		UserVo uservo = userService.getUser(userNo);
+		model.addAttribute("userVo", uservo);
 		
 		return "user/update";
 	}
 	
 	@RequestMapping(value="/update", method=RequestMethod.POST)
-	public String update(HttpSession session, UserVo userVo) {
+	public String update(HttpSession session, UserVo uservo) {
 		// access controller
 		UserVo authUser = (UserVo) session.getAttribute("authUser");
 		if(authUser == null) {
 			return "redirect:/";
 		}
-		userVo.setNo(authUser.getNo());
-		userService.updateUser(userVo);
-		System.out.println(userVo);
+		uservo.setNo(authUser.getNo());
+		userService.updateUser(uservo);
+		System.out.println(uservo);
 		return "redirect:/user/update";
 	}
 

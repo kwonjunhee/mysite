@@ -16,15 +16,19 @@ public class BoardService {
 	private BoardRepository boardRepository;
 
 	//새 글, 답글 달기
-	public boolean addContents(BoardVo vo) {
-		if(vo.getGroupNo() != null) {
-			increaseGroupOrderNo(vo);
+	public boolean addContents(BoardVo boardvo) {
+		if(boardvo.getGroupNo() != null) {
+			increaseGroupOrderNo(boardvo);
 		}
-		return boardRepository.insert(vo);
+		System.out.println(boardvo);
+		return 1==boardRepository.insert(boardvo);
+		
 	}
 	
 	//view 글 보기
 	public BoardVo getContents(Long no) {
+		boardRepository.updateHit(no);
+		System.out.println(boardRepository.findOne(no));
 		return boardRepository.findOne(no);
 	}
 	
@@ -35,8 +39,8 @@ public class BoardService {
 	}
 	
 	// 글 수정
-	public boolean updateContents(BoardVo vo) {
-		return boardRepository.modify(vo);
+	public boolean updateContents(BoardVo boardvo) {
+		return boardRepository.modify(boardvo);
 	}
 	
 	// 글 삭제
@@ -63,8 +67,8 @@ public class BoardService {
 		return map;
 	}
 	
-	private boolean increaseGroupOrderNo(BoardVo vo) {
-		return boardRepository.reply(vo);
+	private boolean increaseGroupOrderNo(BoardVo boardvo) {
+		return boardRepository.reply(boardvo);
 		
 	}
 }

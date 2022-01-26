@@ -11,8 +11,8 @@ public class UserService {
 	@Autowired
 	private UserRepository userRepository;
 
-	public void join(UserVo userVo) {
-		userRepository.insert(userVo);
+	public void join(UserVo uservo) {
+		userRepository.insert(uservo);
 	}
 
 	public UserVo getUser(String email, String password) {
@@ -24,8 +24,8 @@ public class UserService {
 		return userRepository.findByNo(userNo);
 	}
 
-	public void updateUser(UserVo userVo) {
-		userRepository.update(userVo);
+	public void updateUser(UserVo uservo) {
+		userRepository.update(uservo);
 		
 	}
 	

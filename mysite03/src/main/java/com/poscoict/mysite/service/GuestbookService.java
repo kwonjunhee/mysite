@@ -15,15 +15,13 @@ public class GuestbookService {
 	
 	public List<GuestbookVo> getMessageList() {
 		return guestbookrepository.findAll();
-		
 	}
 	
 	public Boolean deleteMessage(Long no, String password) {
 		return guestbookrepository.delete(no, password);
 	}
 	
-	public Boolean addMessage(GuestbookVo vo) {
-		return guestbookrepository.insert(vo);
-		
+	public int addMessage(GuestbookVo guestbookvo) {
+		return guestbookrepository.insert(guestbookvo);
 	}
 }

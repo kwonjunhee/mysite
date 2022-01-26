@@ -13,9 +13,9 @@
 		<c:import url="/WEB-INF/views/includes/header.jsp"/>
 		<div id="content">
 			<div id="board">
-				<form class="board-form" method="post" action="${pageContext.request.contextPath}/board/reply">
-					<input type ="hidden" name="userNo" value="${authUser.no}">
-					<input type ="hidden" name="userName" value="${authUser.name}">
+				<form class="board-form" method="post" action="${pageContext.request.contextPath}/board/write">
+					<input type ="hidden" name="userNo" value="${vo.userNo}">
+					<input type ="hidden" name="userName" value="${vo.userName}">
 					<input type ="hidden" name="groupNo" value="${vo.groupNo}">
 					<input type ="hidden" name="orderNo" value="${vo.orderNo}">
 					<input type ="hidden" name="depth" value="${vo.depth}">
