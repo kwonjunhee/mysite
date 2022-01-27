@@ -14,8 +14,6 @@ import com.poscoict.mysite.vo.UserVo;
 
 public class AuthUserHandlerMethodArgumentResolver implements HandlerMethodArgumentResolver {
 
-	
-
 	@Override
 	public Object resolveArgument(MethodParameter parameter, ModelAndViewContainer mavContainer,
 			NativeWebRequest webRequest, WebDataBinderFactory binderFactory) throws Exception {
@@ -29,6 +27,7 @@ public class AuthUserHandlerMethodArgumentResolver implements HandlerMethodArgum
 		if(session == null) {
 			return null;
 		}
+		
 		return session.getAttribute("authUser");
 	}
 	@Override
@@ -39,13 +38,13 @@ public class AuthUserHandlerMethodArgumentResolver implements HandlerMethodArgum
 		if(authUser == null) {
 			return false;
 		}
-		
+
 		// parameter type이 UserVo가 아님
 		if (parameter.getParameterType().equals(UserVo.class) == false) {
 			 return false;
 		 }
 		
-		return false;
+		return true;
 		
 	}
 }

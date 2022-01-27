@@ -47,8 +47,8 @@
 		<![CDATA[ update board set o_no = o_no+1 where o_no > #{orderNo} and  g_no=#{groupNo}  ]]>
 	</update>
 	
-	<delete id="delete" parameterType="boardvo">
-		<![CDATA[delete from board where no = #{no} and user_no=#{userNo}]]>
+	<delete id="delete" parameterType="map">
+		<![CDATA[delete from board where no = #{boardNo} and user_no=#{authNo}]]>
 	</delete>
 
 		

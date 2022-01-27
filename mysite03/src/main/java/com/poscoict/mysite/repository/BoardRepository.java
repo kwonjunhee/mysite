@@ -24,9 +24,11 @@ public class BoardRepository {
 	public BoardVo findOne(Long no) {
 		return sqlSession.selectOne("board.findOne", no);
 	}
-	public boolean delete(BoardVo boardvo) {
-		
-		return 1==sqlSession.delete("board.delete", boardvo);
+	public boolean delete(Long boardNo, Long authNo) {
+		Map<String, Long> map = new HashMap<>();
+		map.put("boardNo", boardNo);
+		map.put("authNo", authNo);
+		return 1==sqlSession.delete("board.delete", map);
 	}
 	
 	public int insert(BoardVo boardvo) {

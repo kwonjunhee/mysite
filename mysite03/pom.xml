@@ -45,6 +45,14 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/x
 			<version>${org.springframework-version}</version>
 		</dependency>
 	
+		<!-- Spring Aspect -->
+		<dependency>
+		    	<groupId>org.springframework</groupId>
+		    	<artifactId>spring-aspects</artifactId>
+		    	<version>${org.springframework-version}</version>
+		</dependency>
+	
+	
 		<!-- spring jdbc -->
 		<dependency>
 			<groupId>org.springframework</groupId>

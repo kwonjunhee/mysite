@@ -44,8 +44,8 @@ public class BoardService {
 	}
 	
 	// 글 삭제
-	public boolean deleteContents(BoardVo boardvo) {
-		return boardRepository.delete(boardvo);
+	public boolean deleteContents(Long boardNo, Long authNo) {
+		return boardRepository.delete(boardNo, authNo);
 		
 	}
 	

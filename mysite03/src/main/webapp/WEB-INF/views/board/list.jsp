@@ -34,7 +34,7 @@
 						<tr>
 							<td>[${page.boardcnt-status.index}]</td>
 							
-							<td style="text-align:left, padding-left:${(vo.depth-1)}*20px">
+							<td style="text-align:left, padding-left:${(boardvo.depth-1)}*20px">
 										<c:if test = "${boardvo.depth>1}">
 											<img src="${pageContext.servletContext.contextPath}/assets/images/reply.png"/>
 										</c:if>

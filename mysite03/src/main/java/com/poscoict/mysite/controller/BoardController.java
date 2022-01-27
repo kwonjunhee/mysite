@@ -60,13 +60,13 @@ public class BoardController {
 	
 	@Auth
 	@RequestMapping("/delete/{no}")
-	public String delete (@AuthUser UserVo authUser,  BoardVo boardvo,
+	public String delete (
+			@AuthUser UserVo authUser,
 			@PathVariable("no") Long boardNo) {
 		System.out.println(authUser);
-		boardvo.setUserNo(authUser.getNo());
-		boardvo.setNo(boardNo);
-		boardservice.deleteContents(boardvo);
-		System.out.println(boardvo);
+		Long authNo = authUser.getNo();
+		boardservice.deleteContents(boardNo, authNo);
+		System.out.println(boardNo);
 		return "redirect:/board";
 	}
 	@Auth
