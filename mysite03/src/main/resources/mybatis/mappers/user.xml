@@ -8,11 +8,11 @@
 
 	<select id="findByEmailAndPassword" parameterType="map" resultType="uservo">
 		<![CDATA[
-		select no, name from user where email = #{e} and password = #{p}]]>	
+		select no, name, role from user where email = #{e} and password = #{p}]]>	
 	</select>
 	
 	<insert id="insert" parameterType="uservo">
-		<![CDATA[ insert into user values(null, #{name}, #{email}, #{password}, #{gender}, now())]]>	
+		<![CDATA[ insert into user values(null, #{name}, #{email}, #{password}, #{gender}, now(), 'USER')]]>	
 	</insert>
 	
 	<update id="update" parameterType="uservo">

@@ -85,6 +85,7 @@ public class BoardController {
 	public String modify (BoardVo boardvo, @AuthUser UserVo authUser,
 			@RequestParam(value="kwd", required=true, defaultValue="") String kwd,
 			@RequestParam(value="page", required=true, defaultValue="1") int page) {
+		System.out.println(boardvo);
 		boardservice.updateContents(boardvo);
 		
 		return "redirect:/board?page=" + page + "&kwd=" + WebUtil.encodeURL(kwd, "UTF-8");

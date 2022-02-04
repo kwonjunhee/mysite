@@ -52,6 +52,32 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/x
 		    	<version>${org.springframework-version}</version>
 		</dependency>
 	
+		<!-- validation -->
+		<dependency>
+		   <groupId>javax.validation</groupId>
+		   <artifactId>validation-api</artifactId>
+		   <version>2.0.1.Final</version>
+		</dependency>
+		
+		<dependency>
+		   <groupId>org.hibernate</groupId>
+		   <artifactId>hibernate-validator</artifactId>
+		   <version>6.1.0.Final</version>
+		</dependency>
+			
+			
+			<!-- common fileupload -->
+		<dependency>
+			<groupId>commons-fileupload</groupId>
+			<artifactId>commons-fileupload</artifactId>
+			<version>1.2.1</version>
+		</dependency>
+		<dependency>
+			<groupId>commons-io</groupId>
+			<artifactId>commons-io</artifactId>
+			<version>1.4</version>
+		</dependency>	
+			
 	
 		<!-- spring jdbc -->
 		<dependency>
@@ -72,8 +98,6 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/x
 			<artifactId>mybatis-spring</artifactId>
 			<version>1.2.0</version>
 		</dependency>
-						
-				
 				
 		<!-- Common DBCP -->
 		<dependency>
@@ -81,7 +105,6 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/x
 			<artifactId>commons-dbcp</artifactId>
 			<version>1.4</version>
 		</dependency>
-						
 				
 		<!-- https://mvnrepository.com/artifact/org.mariadb.jdbc/mariadb-java-client -->
 		<dependency>
@@ -89,7 +112,8 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/x
 		    <artifactId>mariadb-java-client</artifactId>
 		    <version>2.7.4</version>
 		</dependency>
-				<!-- Logback --> 
+		
+		<!-- Logback --> 
 		<dependency>                                    
 			<groupId>org.slf4j</groupId>                
 			<artifactId>jcl-over-slf4j</artifactId>     
@@ -118,5 +142,4 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/x
 			</plugin>
 		</plugins>
 	</build>	
-
 </project>

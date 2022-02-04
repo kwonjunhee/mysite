@@ -1,8 +1,13 @@
 package com.poscoict.mysite.controller;
 
+
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -18,14 +23,23 @@ public class UserController {
 	private UserService userService;
 	
 	@RequestMapping(value="/join", method=RequestMethod.GET)
-	public String join() {
+	public String join(@ModelAttribute UserVo vo) {
 		return "user/join";
 	}
 	
 	@RequestMapping(value="/join", method=RequestMethod.POST)
-	public String join(UserVo uservo) {
-		userService.join(uservo);
-		System.out.println(uservo);
+	public String join(@ModelAttribute @Valid UserVo vo, BindingResult result, Model model) {
+		if(result.hasErrors()) {
+//			List<ObjectError> list = result.getAllErrors();
+//			for(ObjectError error: list) {
+//				System.out.println(error);
+//		}
+//			model.addAttribute("userVo", userVo);
+			model.addAllAttributes(result.getModel());
+			return "user/join";
+		}
+		userService.join(vo);
+		System.out.println(vo);
 		return "redirect:/user/joinsuccess";
 	}
 
@@ -44,18 +58,18 @@ public class UserController {
 	public String update(@AuthUser UserVo authUser, Model model) {
 		
 		Long userNo = authUser.getNo();
-		UserVo uservo = userService.getUser(userNo);
-		model.addAttribute("userVo", uservo);
+		UserVo userVo = userService.getUser(userNo);
+		model.addAttribute("userVo", userVo);
 		
 		return "user/update";
 	}
 	
 	@Auth
 	@RequestMapping(value="/update", method=RequestMethod.POST)
-	public String update(@AuthUser UserVo authUser, UserVo uservo) {
+	public String update(@AuthUser UserVo authUser, UserVo userVo) {
 
-		uservo.setNo(authUser.getNo());
-		userService.updateUser(uservo);
+		userVo.setNo(authUser.getNo());
+		userService.updateUser(userVo);
 		return "redirect:/user/update";
 	}
 
