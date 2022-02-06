@@ -8,6 +8,8 @@ import java.util.Calendar;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.poscoict.mysite.exception.FileUploadException;
+
 @Service
 public class FileUploadService {
 	private static String SAVE_PATH = "/upload-images";
@@ -40,7 +42,7 @@ public class FileUploadService {
 			
 			url = URL_BASE + "/" +saveFilename;
 		} catch(IOException ex) {
-			throw new RuntimeException("file upload error: "+ ex);	
+			throw new FileUploadException("file upload error: "+ ex);	
 		}
 		return url;
 	}

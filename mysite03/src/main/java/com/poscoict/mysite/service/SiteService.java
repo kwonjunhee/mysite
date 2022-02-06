@@ -19,6 +19,4 @@ public class SiteService {
 		int count = siteRepository.updateSite(siteVo);
 		return count ==1;
 	}
-
-	
 }

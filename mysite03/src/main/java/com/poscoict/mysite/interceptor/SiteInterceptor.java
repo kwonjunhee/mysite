@@ -17,11 +17,10 @@ public class SiteInterceptor extends HandlerInterceptorAdapter {
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
 		
-		response.setContentType("text/html;charset=utf-8");
-		
 		SiteVo siteVo = (SiteVo) request.getServletContext().getAttribute("SiteVo");
 		if(siteVo == null || siteVo.equals(null)) {
-			request.setAttribute("siteVo", siteService.findSite());
+			siteVo = siteService.findSite();
+			request.setAttribute("siteVo", siteVo);
 			return true;
 		}
 		System.out.println("siteVo"+siteVo);

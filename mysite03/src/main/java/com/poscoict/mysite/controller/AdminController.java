@@ -1,5 +1,7 @@
 package com.poscoict.mysite.controller;
 
+import javax.servlet.ServletContext;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,6 +23,8 @@ public class AdminController {
 	private SiteService siteservice;
 	@Autowired
 	private FileUploadService fileUploadService;
+	@Autowired
+	private ServletContext servletContext;
 	
 	@RequestMapping({"", "main"})
 	public String main(Model model) {
@@ -32,10 +36,12 @@ public class AdminController {
 	public String update(SiteVo siteVo, Model model,
 			@RequestParam(value="file1") MultipartFile multipartFile) {
 		String profile = fileUploadService.restore(multipartFile);
-		siteVo.setProfile(profile);
-		
+		if(profile!=null) {
+			siteVo.setProfile(profile);
+		}
 		siteservice.updateSite(siteVo);
-		model.addAttribute("siteVo", siteservice.findSite());
+		servletContext.setAttribute("siteVo", siteVo);
+//		model.addAttribute("siteVo", siteservice.findSite());
 		System.out.println(siteVo);
 		return "redirect:/admin";
 	}
