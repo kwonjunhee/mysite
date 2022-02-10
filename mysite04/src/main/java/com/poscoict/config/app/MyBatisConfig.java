@@ -20,9 +20,9 @@ public class MyBatisConfig {
 		SqlSessionFactoryBean sqlSessionFactory = new SqlSessionFactoryBean();
 		sqlSessionFactory.setDataSource(dataSource);
 		sqlSessionFactory.setConfigLocation(
-				applicationContext.getResource("classpath:com/poscoict/mysite/config/app/mybatis/configuration.xml"));
-		
-		
+				applicationContext.getResource(
+					"classpath:com/poscoict/mysite/config/app/mybatis/configuration.xml"));
+				
 		return sqlSessionFactory.getObject();
 	}
 	

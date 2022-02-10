@@ -30,11 +30,6 @@ public class UserController {
 	@RequestMapping(value="/join", method=RequestMethod.POST)
 	public String join(@ModelAttribute @Valid UserVo vo, BindingResult result, Model model) {
 		if(result.hasErrors()) {
-//			List<ObjectError> list = result.getAllErrors();
-//			for(ObjectError error: list) {
-//				System.out.println(error);
-//		}
-//			model.addAttribute("userVo", userVo);
 			model.addAllAttributes(result.getModel());
 			return "user/join";
 		}
@@ -72,7 +67,18 @@ public class UserController {
 		userService.updateUser(userVo);
 		return "redirect:/user/update";
 	}
+	
+	@RequestMapping(value="/auth", method=RequestMethod.POST)
+	public void auth() {
+		
+	}
 
+
+	@RequestMapping(value="/logout", method=RequestMethod.GET)
+	public void logout() {
+		
+	}
+	
 	// 별로다.
 //		@ExceptionHandler( Exception.class )
 //		public String UserControllerException() {
