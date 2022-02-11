@@ -112,6 +112,7 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+				<version>2.5.6</version>
 			</plugin>
 			<!-- Tomcat WAR 배포 플러그인 -->
 			<plugin>
