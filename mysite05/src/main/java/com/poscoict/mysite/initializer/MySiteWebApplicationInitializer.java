@@ -34,11 +34,11 @@ public class MySiteWebApplicationInitializer extends AbstractAnnotationConfigDis
 	}
 	
 //	404 나옴
-//	@Override
-//	protected void customizeRegistration(Dynamic registration) {
-//		
-//	}
-//	
+	@Override
+	protected void customizeRegistration(Dynamic registration) {
+		registration.setInitParameter("throwExceptionIfNoHandlerFound", "true");
+	}
+	
 	
 
 }
