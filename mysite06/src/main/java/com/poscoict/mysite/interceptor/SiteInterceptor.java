@@ -17,15 +17,15 @@ public class SiteInterceptor extends HandlerInterceptorAdapter {
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
 		
-		SiteVo siteVo = (SiteVo) request.getServletContext().getAttribute("SiteVo");
+		SiteVo siteVo = (SiteVo) request.getServletContext().getAttribute("siteVo");
 		System.out.println("!!!!!!!!!!!"+siteVo);
 		if(siteVo == null || siteVo.equals(null)) {
-			System.out.println("!!!!!!!!!!!"+siteVo);
 			siteVo = siteService.findSite();
+			System.out.println("!!!!!!!!!!!"+siteVo);
 			request.setAttribute("siteVo", siteVo);
 			return true;
 		}
-		System.out.println("siteVo"+siteVo);
+		
 		request.setAttribute("siteVo", siteVo);
 		// 서블릿컨텍스트에 site 저장
 		return true;

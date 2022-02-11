@@ -42,7 +42,7 @@ spring:
 
    datasource:
       driver-class-name: org.mariadb.jdbc.Driver
-      url: jdbc:mysql://192.168.0.65:3307/webdb?characterEncoding=UTF-8&amp;serverTimezone=UTC
+      url: jdbc:mysql://192.168.0.64:3307/webdb?characterEncoding=UTF-8&amp;serverTimezone=UTC
       username: webdb
       password: webdb
       hikari:
@@ -71,7 +71,7 @@ spring:
 
    datasource:
       driver-class-name: org.mariadb.jdbc.Driver
-      url: jdbc:mysql://192.168.0.65:3307/webdb?characterEncoding=UTF-8&amp;serverTimezone=UTC
+      url: jdbc:mysql://192.168.0.64:3307/webdb?characterEncoding=UTF-8&amp;serverTimezone=UTC
       username: webdb
       password: webdb
       hikari:
