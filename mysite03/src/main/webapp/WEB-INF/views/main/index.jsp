@@ -19,7 +19,8 @@
 					<img id="profile" src="${pageContext.request.contextPath }${siteVo.profile}" style='width:200px'>
 					<h2>${siteVo.welcome }</h2>
 					<p>
-						${siteVo.description}<br><br>
+						${siteVo.description}
+						<br><br>
 						<a href="${pageContext.request.contextPath}/guestbook">방명록</a>에 글 남기기<br>
 					</p>
 					

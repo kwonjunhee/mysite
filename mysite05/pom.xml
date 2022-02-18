@@ -10,9 +10,6 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/x
   <artifactId>mysite05</artifactId>
   <packaging>war</packaging>
   
-  
-  
-  
    <properties>
 		<org.springframework-version>4.3.4.RELEASE</org.springframework-version>
 	<jcloverslf4j.version>1.7.6</jcloverslf4j.version>		
