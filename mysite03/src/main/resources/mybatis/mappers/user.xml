@@ -11,6 +11,12 @@
 		select no, name, role from user where email = #{e} and password = #{p}]]>	
 	</select>
 	
+	<select id="findByEmail" parameterType="String" resultType="uservo">
+		<![CDATA[
+		select no from user where email = #{e} ]]>	
+	</select>
+	
+	
 	<insert id="insert" parameterType="uservo">
 		<![CDATA[ insert into user values(null, #{name}, #{email}, #{password}, #{gender}, now(), 'USER')]]>	
 	</insert>

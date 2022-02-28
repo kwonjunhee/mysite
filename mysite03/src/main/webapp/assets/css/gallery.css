@@ -36,8 +36,8 @@
 
 #gallery ul li a.del-button {
 	position:absolute;
-	right:2px;
-	top:3px;
+	right:7px;
+	top:10px;
 
 	display:none;
 	
@@ -45,8 +45,8 @@
 
 #gallery ul li:hover a.del-button {
 	display: block;
-	width: 11px;
-	height: 11px;
+	width: 15px;
+	height: 15px;
 	background: url("/mysite03/assets/images/delete-image.png") no-repeat;
 	background-size: 11px 11px;
 	background-position: center;

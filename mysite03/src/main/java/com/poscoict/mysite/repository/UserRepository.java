@@ -31,8 +31,13 @@ public class UserRepository {
 		return sqlSession.selectOne("user.findByEmailAndPassword", map);
 	}
 
-	public UserVo findByNo(Long no) {
-		return sqlSession.selectOne("user.findByNo", no);
+	public UserVo findByNo(Long userNo) {
+		return sqlSession.selectOne("user.findByNo", userNo);
+
+	}
+
+	public UserVo findByEmail(String email) {
+		return sqlSession.selectOne("user.findByEmail", email);
 
 	}
 

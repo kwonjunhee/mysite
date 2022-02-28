@@ -1,56 +1,129 @@
-<%@ taglib uri ="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ taglib uri ="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
-<%@ taglib uri ="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
-<title>${siteVo.title}</title>
+<title>mysite</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8">
-<link href="${pageContext.request.contextPath}/assets/css/user.css" rel="stylesheet" type="text/css">
+<link href="${pageContext.request.contextPath }/assets/css/user.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="${pageContext.request.contextPath }/assets/js/jquery/jquery-1.9.0.js"></script>
+<script>
+$(function() {
+	
+	// validation 만들어보기
+	$("#join-form").submit(function(event){ // 이벤트함수
+		event.preventDefault();
+		
+		// 이름 유효성 체크 (empty)
+		if($("#name").val() === '' ) {
+			alert('이름이 비어있습니다.');
+			$("#name").focus;
+			return;
+		}
+		
+		// 이메일 유효성 체크 (empty)
+		if($("#email").val() === '' ) {
+			alert('이메일이 비어있습니다.');
+			$("#email").focus;
+			return;
+		}
+		// 비밀번호 중복체크 유무 ***
+		// 이미지 상태가 하이드인지 쇼인지 확인해보면 될 것
+		
+		// 비밀번호 유효성 체크 (empty)
+		if($("#password").val() === '' ) {
+			alert('비밀번호가 비어있습니다.');
+			$("#password").focus;
+			return;
+		}
+		// 유효성 ㅇㅋ 
+		console.log("okay");
+		// $("#join-form")[0].submit();
+		
+	});
+	
+	
+	
+	$("#email").change(function() {
+		$("img-checkemail").hide();
+		$("btn-checkemail").show();
+	});
+	
+	$("#btn-checkemail").click(function() {
+		var email = $("#email").val();
+		if(email == '') {
+			return;
+		}
+		
+		$.ajax({
+			url: "${pageContext.request.contextPath }/user/api/checkemail?email=" + email,
+			type:"get",
+			dataType:"json",
+			success: function(response) {
+				if(response.result !== 'success') {
+					console.error(response.message);
+					return ;
+				}
+				if(response.data) {
+					alert("존재하는 이메일입니다. 다른 이메일을 사용해 주세요.");
+					$("#email").val('').focus();
+					return;
+				}
+				$("img-checkemail").show();
+				$("btn-checkemail").hide();
+			},
+			error:function(xhr, status, e) {
+				console.error(status,e);
+			} 
+		});
+	});
+});
+</script>
 </head>
 <body>
 	<div id="container">
 		<c:import url="/WEB-INF/views/includes/header.jsp"/>
 		<div id="content">
 			<div id="user">
-
-				<form:form 
-					modelAttribute="userVo"  
+				<form:form
+					modelAttribute="userVo" 
 					id="join-form" 
-					name="join" 
+					name="joinForm" 
 					method="post" 
-					action="${pageContext.request.contextPath}/user/join">
+					action="${pageContext.request.contextPath }/user/join">
 					
-					<label class="block-label" for="name"><spring:message code="user.join.label.name"/></label>
-					<form:input path="name"/>
-					<p style="text-align:left; padding-left:0; color:#f00">	
+					<label class="block-label" for="name">이름</label>
+					<form:input path="name" />
+					<p style="text-align:left; padding-left:0; color:#f00">
 						<spring:hasBindErrors name="userVo">
-							<c:if test="${errors.hasFieldErrors('name')}">
-								<spring:message code="${errors.getFieldError('name').codes[0]}" />
+							<c:if test="${errors.hasFieldErrors('name') }">
+								<spring:message code="${errors.getFieldError('name').codes[0] }" />
 							</c:if>
 						</spring:hasBindErrors>
 					</p>
+					<label class="block-label" for="email">이메일</label>
+					<form:input path="email" />
+					<input type="button" id = "btn-checkemail" value="중복체크">
+					<img id="img-checkemail" src="${pageContext.request.contextPath }/assets/images/check.png" style="width:16px; display:none"/>
 					
-					<label class="block-label" for="email"><spring:message code="user.join.label.email" /></label>
-					<form:input path="email"/>
-					<input type="button" value="id 중복체크">
-					<p style="text-align:left; padding-left:0; color:#f00">	
+					<p style="text-align:left; padding-left:0; color:#f00">
 						<form:errors path="email" />
-					</p>
+					</p>	
 					
 					<label class="block-label"><spring:message code="user.join.label.password" /></label>
-					<form:password path="password"/>
-					<p style="text-align:left; padding-left:0; color:#f00">	
+					<form:password path="password" />
+					<p style="text-align:left; padding-left:0; color:#f00">
 						<form:errors path="password" />
-					</p>
+					</p>	
 					
 					<fieldset>
 						<legend>성별</legend>
-						<form:radiobutton path="gender" value="female" label="여" />
-						<form:radiobutton path="gender" value="male" label="남" />
+						<form:radiobutton path="gender" value="female" label="여"/>
+						<form:radiobutton path="gender" value="male" label="남"/>
 					</fieldset>
 					
 					<fieldset>
@@ -64,7 +137,7 @@
 				</form:form>
 			</div>
 		</div>
-		<c:import url="/WEB-INF/views/includes/navigation.jsp"/>
+		<c:import url="/WEB-INF/views/includes/navigation.jsp" />
 		<c:import url="/WEB-INF/views/includes/footer.jsp"/>
 	</div>
 </body>
