@@ -1,21 +1,22 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" 
-xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
-xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
-  <parent>
-    <groupId>com.poscoict</groupId>
-    <artifactId>mysite</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
-  </parent>
-  <artifactId>mysite05</artifactId>
-  <packaging>war</packaging>
-  
-   <properties>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>com.poscoict</groupId>
+		<artifactId>mysite</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+	</parent>
+	<artifactId>mysite05</artifactId>
+	<packaging>war</packaging>
+	
+	<properties>
 		<org.springframework-version>4.3.4.RELEASE</org.springframework-version>
-	<jcloverslf4j.version>1.7.6</jcloverslf4j.version>		
-    	<logback.version>1.1.1</logback.version>
-	</properties>	
-		<dependencies>
+    	<jcloverslf4j.version>1.7.6</jcloverslf4j.version>		
+    	<logback.version>1.1.1</logback.version>		
+	</properties>
+
+	<dependencies>
 		<!-- Spring Context(Container) -->
 		<dependency>
 			<groupId>org.springframework</groupId>
@@ -96,6 +97,13 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/x
 		    <version>2.7.4</version>
 		</dependency>
 
+		<!-- jackson -->
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
+			<version>2.9.8</version>
+		</dependency>
+		
 		<!-- Common Fileupload -->
 		<dependency>
 			<groupId>commons-fileupload</groupId>
@@ -157,6 +165,5 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/x
 				</configuration>
 			</plugin>	
 		</plugins>		
-	</build>
-  
+	</build>	
 </project>

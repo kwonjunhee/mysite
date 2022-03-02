@@ -9,48 +9,76 @@
 <head>
 <title>mysite</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+<link rel="stylesheet" href="//code.jquery.com/ui/1.13.1/themes/base/jquery-ui.css">
 <link href="${pageContext.request.contextPath }/assets/css/user.css" rel="stylesheet" type="text/css">
 <script type="text/javascript" src="${pageContext.request.contextPath }/assets/js/jquery/jquery-1.9.0.js"></script>
+
+<script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
 <script>
+var messageBox = function(title, message, callback) {
+	$("#dialog-message p").text(message);
+	$("#dialog-message")
+		.attr('title', title)
+		.dialog({
+			width: 350,
+			modal: true,
+			buttons: {
+				"확인": function() {
+					$(this).dialog("close");
+				}
+			},
+			close: callback
+			
+		});	
+}
+
 $(function() {
-	
 	// validation 만들어보기
 	$("#join-form").submit(function(event){ // 이벤트함수
 		event.preventDefault();
 		
 		// 이름 유효성 체크 (empty)
 		if($("#name").val() === '' ) {
-			alert('이름이 비어있습니다.');
-			$("#name").focus;
+			messageBox('회원가입', '이름은 필수 항목입니다.', function() {
+				$("#name").focus();
+			}));
 			return;
 		}
 		
 		// 이메일 유효성 체크 (empty)
 		if($("#email").val() === '' ) {
-			alert('이메일이 비어있습니다.');
-			$("#email").focus;
+			messageBox('회원가입', '이메일은 필수 항목입니다.', function() {
+				$("#email").focus;
+			}));
 			return;
 		}
-		// 비밀번호 중복체크 유무 ***
+		// 이메일 중복체크 유무 ***
 		// 이미지 상태가 하이드인지 쇼인지 확인해보면 될 것
+		if(!$("#img-checkemail").is(':visible')) {
+			messageBox('회원가입', '이메일 중복 여부를 확인해주세요.');
+			return;
+		}
+		
 		
 		// 비밀번호 유효성 체크 (empty)
 		if($("#password").val() === '' ) {
-			alert('비밀번호가 비어있습니다.');
-			$("#password").focus;
+			messageBox('회원가입', '비밀번호는 필수 항목입니다.', function() {
+				$("#password").focus;
+			}));
 			return;
 		}
 		// 유효성 ㅇㅋ 
 		console.log("okay");
-		// $("#join-form")[0].submit();
+		$("#join-form")[0].submit();
 		
 	});
 	
 	
 	
 	$("#email").change(function() {
-		$("img-checkemail").hide();
-		$("btn-checkemail").show();
+		$("#img-checkemail").hide();
+		$("#btn-checkemail").show();
 	});
 	
 	$("#btn-checkemail").click(function() {
@@ -69,12 +97,13 @@ $(function() {
 					return ;
 				}
 				if(response.data) {
-					alert("존재하는 이메일입니다. 다른 이메일을 사용해 주세요.");
-					$("#email").val('').focus();
+					messageBox("이메일 중복 확인","존재하는 이메일입니다. 다른 이메일을 사용해 주세요.", function() {
+						$("#email").val('').focus();				
+					});
 					return;
 				}
-				$("img-checkemail").show();
-				$("btn-checkemail").hide();
+				$("#img-checkemail").show();
+				$("#btn-checkemail").hide();
 			},
 			error:function(xhr, status, e) {
 				console.error(status,e);
@@ -122,8 +151,8 @@ $(function() {
 					
 					<fieldset>
 						<legend>성별</legend>
-						<form:radiobutton path="gender" value="female" label="여"/>
-						<form:radiobutton path="gender" value="male" label="남"/>
+						<form:radiobutton path="gender" value="female" label="여"  checked="${userVo.gender == 'female'}" />
+						<form:radiobutton path="gender" value="male" label="남" checked="${userVo.gender == 'male' }"/>
 					</fieldset>
 					
 					<fieldset>
@@ -137,6 +166,12 @@ $(function() {
 				</form:form>
 			</div>
 		</div>
+		
+		<!-- dialog 예제 -->
+		<div id="dialog-message" title="" style="display:none">
+		  <p style="line-height: 60px"></p>
+		</div>
+		
 		<c:import url="/WEB-INF/views/includes/navigation.jsp" />
 		<c:import url="/WEB-INF/views/includes/footer.jsp"/>
 	</div>

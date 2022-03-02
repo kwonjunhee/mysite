@@ -16,11 +16,18 @@ public class GuestbookController {
 	@Autowired
 	private GuestbookService guestbookservice;
 	
-	@RequestMapping({"", "index"})
+	@RequestMapping({""})
 	public String index(Model model) {
 		model.addAttribute("list", guestbookservice.getMessageList());
 		return "guestbook/index";
 	}
+
+	@RequestMapping({"/spa"})
+	public String spa() {
+		return "guestbook/index-spa";
+	}
+
+	
 	@RequestMapping(value="/add", method=RequestMethod.POST)
 	public String add(GuestbookVo guestbookvo) {
 		System.out.println("guestbookvo: "+guestbookvo);

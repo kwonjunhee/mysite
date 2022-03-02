@@ -36,4 +36,7 @@ public class UserRepository {
 
 	}
 
+	public UserVo findByEmail(String email) {
+		return sqlSession.selectOne("user.findByEmail", email);
+	}
 }
