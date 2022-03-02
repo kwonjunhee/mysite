@@ -13,8 +13,8 @@ public class GuestbookService {
 	@Autowired
 	private GuestbookRepository guestbookrepository;
 	
-	public List<GuestbookVo> getMessageList() {
-		return guestbookrepository.findAll();
+	public List<GuestbookVo> getMessageList(Long sn) {
+		return guestbookrepository.findAll(sn);
 	}
 	
 	public Boolean deleteMessage(Long no, String password) {

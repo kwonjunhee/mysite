@@ -15,8 +15,8 @@ public class GuestbookRepository {
 	@Autowired
 	private SqlSession sqlSession;
 	
-	public List<GuestbookVo> findAll() {
-		return sqlSession.selectList("guestbook.findAll");
+	public List<GuestbookVo> findAll(Long sn) {
+		return sqlSession.selectList("guestbook.findAll", sn);
 	}
 	
 	public int insert(GuestbookVo guestbookvo) {
